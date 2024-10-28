@@ -7,13 +7,13 @@ Ce projet permet de connecter un webhook à un port MIDI. Parfait pour envoyer d
 
 1. **Clonez le dépôt** :
    ```bash
-   git clone https://github.com/votre-utilisateur/votre-depot.git
-   cd votre-depot
+   git clone https://github.com/naileclevrai/webhook-to-midi.git
+   cd webhook-to-midi
    ```
 
 2. **Installez les dépendances** :
    ```bash
-   npm install
+   npm install express midi
    ```
 
 3. **Configuration du port MIDI** :  
