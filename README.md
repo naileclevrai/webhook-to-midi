@@ -82,6 +82,3 @@ Ou avec un outil comme **Postman** pour envoyer la requête en HTTP.
 Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
 
 ---
-
-🎉 **Amusez-vous à créer de la musique automatisée !** 🎶
-```
