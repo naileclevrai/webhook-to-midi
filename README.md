@@ -1,7 +1,3 @@
-Voici une version modifiée de votre fichier README pour refléter l'utilisation du projet dans le cadre de livestreams et le contrôle de projecteurs via DMX :
-
----
-
 # 🎥 Webhook MIDI Connector for Livestreams
 
 Ce projet permet de connecter des webhooks à un port MIDI, idéal pour contrôler des projecteurs de spectacle via des logiciels DMX compatibles avec MIDI, tels que **dot2** et d'autres. Grâce à cet outil, vous pouvez automatiser vos éclairages et effets directement à partir d'événements provenant d'outils comme **Tikfinity**. 🌟🎛️
