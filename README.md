@@ -1,44 +1,66 @@
-# 🎹 Webhook MIDI Connector
+Voici une version modifiée de votre fichier README pour refléter l'utilisation du projet dans le cadre de livestreams et le contrôle de projecteurs via DMX :
 
-Ce projet permet de connecter un webhook à un port MIDI. Parfait pour envoyer des signaux MIDI à partir de requêtes HTTP ! 🌐🎶
+---
+
+# 🎥 Webhook MIDI Connector for Livestreams
+
+Ce projet permet de connecter des webhooks à un port MIDI, idéal pour contrôler des projecteurs de spectacle via des logiciels DMX compatibles avec MIDI, tels que **dot2** et d'autres. Grâce à cet outil, vous pouvez automatiser vos éclairages et effets directement à partir d'événements provenant d'outils comme **Tikfinity**. 🌟🎛️
+
+---
+
+## ✨ Fonctionnalités
+
+- **Contrôle DMX via MIDI** : Fonctionne avec tout logiciel DMX compatible MIDI.
+- **Webhook intégré** : Transformez des requêtes HTTP en signaux MIDI.
+- **Configuration facile** : Intégration directe avec des outils de livestream comme Tikfinity.
+
+---
+
+## 💡 Logiciels DMX Compatibles
+
+Voici une liste de logiciels DMX compatibles MIDI que vous pouvez utiliser :
+
+- **dot2** (MA Lighting)
+- **QLC+**
+- **Lightkey**
+- **ShowXpress** (Chauvet DJ)
+- **Freestyler DMX**
+- **Hog 4** (High End Systems)
+
+Ces logiciels vous permettent de configurer des actions DMX déclenchées par des signaux MIDI envoyés depuis ce projet.
+
+---
 
 ## 🚀 Prérequis
 
 1. **Node.js** et **npm** installés.
 2. **loopMIDI** installé et configuré pour créer un port MIDI virtuel nommé `"Webhook to MIDI"`.
-3. **Visual Studio C++ 2022** pour compiler les dépendances natives.
+3. **Tikfinity** pour envoyer des webhooks basés sur vos événements de livestream.
+4. (Optionnel) **Visual Studio C++ 2022** pour compiler les dépendances natives.
 
-## 📦 Installation des Prérequis
+---
 
-### 1. Installation de loopMIDI 🎛️
+## ⚙️ Configuration et Installation
 
-**loopMIDI** est un utilitaire pour créer des ports MIDI virtuels, utile pour connecter des applications MIDI sans matériel externe.
+### 1. Préparer le port MIDI virtuel avec loopMIDI
 
-- Téléchargez **loopMIDI** depuis [https://www.tobias-erichsen.de/software/loopmidi.html](https://www.tobias-erichsen.de/software/loopmidi.html).
-- Installez l'application et ouvrez-la.
-- Dans l'interface de loopMIDI, créez un nouveau port en le nommant **exactement** `"Webhook to MIDI"`. Vous verrez ce port apparaître dans la liste des ports disponibles.
+- Téléchargez et installez **loopMIDI** depuis [https://www.tobias-erichsen.de/software/loopmidi.html](https://www.tobias-erichsen.de/software/loopmidi.html).
+- Lancez l'application et créez un nouveau port nommé **exactement** `"Webhook to MIDI"`.
 
-### 2. Installation de Visual Studio C++ 2022 🛠️
+### 2. Installer Tikfinity
 
-**Visual Studio C++ 2022** est nécessaire pour compiler les dépendances natives utilisées par le module `midi`.
+- Téléchargez et installez **Tikfinity**
+- Ouvrez Tikfinity et allez dans l'onglet **Actions > Create New Action**.
+  - Donnez un nom à votre action.
+  - Cochez l'option **Send Webhook**.
+  - Dans le champ URL du webhook, entrez : 
+    ```
+    http://<votre_ip>:3000/webhook
+    ```
+    Remplacez `<votre_ip>` par l'adresse IP publique de votre machine ou `localhost` si vous testez localement.
+  - Configurez l'action et associez-la aux événements souhaités (par exemple : un cadeau reçu, un abonné, etc.).
 
-- Téléchargez et installez **Visual Studio 2022** depuis [https://visualstudio.microsoft.com/](https://visualstudio.microsoft.com/).
-- Lors de l'installation, assurez-vous de sélectionner le **"Desktop development with C++"** pour installer les outils de compilation.
-
-## ⚙️ Configuration du Projet
-
-1. **Clonez le dépôt** :
-   ```bash
-   git clone https://github.com/naileclevrai/webhook-to-midi.git
-   cd webhook-to-midi
-   ```
-
-2. **Installez les dépendances** :
-   ```bash
-   npm install
-   ```
-
-3. **Assurez-vous que le port MIDI est actif dans loopMIDI** : ouvrez loopMIDI et vérifiez que `"Webhook to MIDI"` est bien actif dans la liste.
+---
 
 ## 🚀 Utilisation
 
@@ -46,39 +68,33 @@ Ce projet permet de connecter un webhook à un port MIDI. Parfait pour envoyer d
    ```bash
    node app.js
    ```
-   Le serveur sera par défaut à l'écoute sur le port `3000`, mais vous pouvez le modifier avec la variable d'environnement `PORT`.
+   Par défaut, le serveur écoute sur le port `3000`.
 
-2. **Envoyer un signal MIDI via le webhook** :
-   Envoyez une requête `POST` à `http://localhost:3000/webhook` avec les données JSON suivantes :
+2. **Configurer vos actions Tikfinity** : Assurez-vous que Tikfinity envoie les webhooks au bon port.
 
-   ```json
-   {
-       "note": 60,
-       "velocity": 127
-   }
-   ```
+3. **Tester avec un événement** : Associez une action Tikfinity à un événement (par exemple : cadeau TikTok). Le signal MIDI correspondant sera envoyé et votre logiciel DMX interprétera l'action.
 
-   - `note` : le numéro MIDI de la note (optionnel, par défaut 60)
-   - `velocity` : la vélocité de la note (optionnel, par défaut 127)
-
-   Le serveur enverra alors un signal **Note ON**, puis un **Note OFF** après un délai de 50 ms.
+---
 
 ## 📋 Exemples de Requêtes
 
-Vous pouvez tester avec `curl` :
+Pour tester directement le webhook, envoyez une requête `POST` :
+
 ```bash
 curl -X POST http://localhost:3000/webhook -H "Content-Type: application/json" -d '{"note": 64, "velocity": 100}'
 ```
 
-Ou avec un outil comme **Postman** pour envoyer la requête en HTTP.
+---
 
-## 🛠 Dépendances
+## 🤝 Contributions
 
-- **express** : pour créer l'API web.
-- **midi** : pour envoyer des signaux MIDI.
+- Les **pull requests** et les **issues** sont les bienvenus !
+- Si ce projet vous plaît, pensez à lui donner une ⭐ sur GitHub.
 
-## 📄 License
+---
+
+## 📄 Licence
 
 Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
 
----
+--- 
